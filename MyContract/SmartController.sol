@@ -1,11 +1,11 @@
 pragma solidity ^0.4.11; //컴파일러 버전 지정
 
 contract SmartController {
-		// 스위치가 사용할 구조체
-		struct Controller {
-      address add; // client의 주소
-      uint endTime; // 이용 종료 시간
-      bool staus; // true알 때만 사용가능
+    // 스위치가 사용할 구조체
+    struct Controller {
+    address add; // client의 주소
+    uint endTime; // 이용 종료 시간
+    bool staus; // true알 때만 사용가능
     }
 
     address public owner; // 오너의 주소
