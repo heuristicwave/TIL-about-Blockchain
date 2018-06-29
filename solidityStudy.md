@@ -34,4 +34,4 @@ contract HelloWorld {
     }
 }
 ~~~
-https://medium.com/@heuristicwave/iot-smartcontract-in-solidity-51d7b5f83428 미디엄 
+https://medium.com/@heuristicwave/iot-smartcontract-in-solidity-51d7b5f83428 미디엄 IoT and SmartContract
