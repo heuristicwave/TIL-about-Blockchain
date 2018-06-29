@@ -22,7 +22,7 @@ contract SmartController {
 
     /// IoT 장치 권한 체크
     modifier onlyIoT() {
-      require(msg.sender == iot;
+      require(msg.sender == iot);
       _;
     }
 
