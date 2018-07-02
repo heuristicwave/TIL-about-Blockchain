@@ -36,3 +36,14 @@ contract HelloWorld {
 ~~~
 https://medium.com/@heuristicwave/iot-smartcontract-in-solidity-51d7b5f83428 미디엄 IoT and SmartContract
 https://medium.com/@heuristicwave/iot-smartcontract-in-solidity-2-%EC%9E%91%EC%84%B1%EC%A4%91-c3f2aa04fb8e 2편
+
+
+## Withdraw 패턴
+
+http://solidity.readthedocs.io/en/v0.4.24/common-patterns.html
+송금을 받는 주체가 계약인 경우에는 fallback 함수가 호출되는데, 이 fallback 함수에 악의적인 처리가 포함되면 부정인출이 일어 날 수 있다.
+이전 CA의 처리를 실패하게 만들어서 본래의 기능을 못하게 함.
+
+그러나 전용 함수를 사용하여 사용자가 직접 인출해가게 하면
+솔리디티 예시에서는
+bid와 입찰금 반환처리 부분이 분리되었기 때문에 withdraw가 실패해도 이후의 bid처리에 영향을 미치지 않는다.
