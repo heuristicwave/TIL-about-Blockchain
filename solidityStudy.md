@@ -8,6 +8,9 @@ https://medium.com/@heuristicwave/iot-smartcontract-in-solidity-2-%EC%9E%91%EC%8
 함수의 상태변경성은 컨트랙트에 정의된 상태 변수를 읽거나 쓰는 연산을 함수 내에서 수행할 수 있는지 제한하기 위한 용도로 사용한다.</br>
 pure / view / payable / default(non-payable)</br>
 
+<img src = "https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/%EC%83%81%ED%83%9C%EB%B3%80%EA%B2%BD%EC%84%B1.png">
+
+
 
 
 ## Address 타입의 속성과 함수
