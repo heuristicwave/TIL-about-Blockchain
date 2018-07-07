@@ -1,1 +1,5 @@
-dd
+ ERC165를 상속
+ 
+ 721BASIC이 SupportInterfaceWithLookup을 상속
+ 
+ 
