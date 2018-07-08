@@ -52,7 +52,7 @@ http://solidity.readthedocs.io/en/v0.4.24/common-patterns.html
 솔리디티 예시에서는
 bid와 입찰금 반환처리 부분이 분리되었기 때문에 withdraw가 실패해도 이후의 bid처리에 영향을 미치지 않는다.
 
-## 문접
+## 문
 
 솔리디티는 지수 연산  (즉, "x의 y승", x^y이지): </br>
 
