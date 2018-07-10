@@ -58,3 +58,8 @@ function feedOnKitty(uint _zombieId, uint _kittyId) public {
     feedAndMultiply(_zombie, kittyDna);
   }
 ~~~
+
+### sss
+
+### 기타
+_isReady()를 확인하는 require 문장을 추가하고 거기에 myZombie를 전달
