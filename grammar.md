@@ -41,6 +41,18 @@ numbers.push(10);
 numbers.push(15);
 // numbers 배열은 [5, 10, 15]과 같다.
 ~~~
+    
+Zombie(_name, _dna, 1, uint32(now + cooldownTime), 0, 0)
+~~~
+struct Zombie {
+      string name;
+      uint dna;
+      uint32 level;
+      uint32 readyTime;
+      uint16 winCount;
+      uint16 lossCount;
+    }
+~~~
 
 ### 함수
 private 함수는 관례적으로 _ 로 시작한다, 호출시에도 언더바를 붙여서 호출한다 ex) _play </br> 
