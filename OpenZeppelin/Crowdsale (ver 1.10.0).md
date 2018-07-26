@@ -2,7 +2,7 @@
 
 ## Crowdsale (ver 1.10.0)
 
-< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/Crowdsale.sol>
+< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/Crowdsale.sol >
 
 ### contract Crowdsale
 
@@ -11,14 +11,11 @@ import "../token/ERC20/ERC20.sol";
 import "../math/SafeMath.sol";
 ````
 
-````
-// The token being sold
-  ERC20 public token;
-````
-
 
 
 #### Variable
+
+ERC20 public token;
 
 wallet : fund가 모이는 주소
 
