@@ -4,7 +4,7 @@
 
 토큰 가격을 시간에 따라 지속해서 올리는 Crowdsale. 생성자에게 최초, 최종 비율과  `wei`당 기부된 토큰의 양을 제공해야한다. 그러므로, 초기비율은 최종비율보다 커야 한다.
 
-< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/price/IncreasingPriceCrowdsale.sol>
+< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/price/IncreasingPriceCrowdsale.sol >
 
 ````
 import "../validation/TimedCrowdsale.sol";

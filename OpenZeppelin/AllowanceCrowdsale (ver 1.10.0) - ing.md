@@ -4,7 +4,7 @@
 
 ...
 
-< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/emission/AllowanceCrowdsale.sol>
+< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/emission/AllowanceCrowdsale.sol >
 
 ````
 import "../Crowdsale.sol";

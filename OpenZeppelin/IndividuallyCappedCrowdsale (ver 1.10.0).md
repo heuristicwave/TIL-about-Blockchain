@@ -4,7 +4,7 @@
 
 사용자마다 Cap가 있는 컨트랙트
 
-< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/validation/IndividuallyCappedCrowdsale.sol>
+< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/validation/IndividuallyCappedCrowdsale.sol >
 
 ````
 import "../../math/SafeMath.sol";

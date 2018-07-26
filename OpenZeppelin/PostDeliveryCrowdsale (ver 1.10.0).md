@@ -4,7 +4,7 @@
 
 크라우드세일이 종료될때 까지, 인출할수 없도록 lock하는 Crowdsale
 
-< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/distribution/PostDeliveryCrowdsale.sol>
+< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/distribution/PostDeliveryCrowdsale.sol >
 
 ````
 import "../validation/TimedCrowdsale.sol";

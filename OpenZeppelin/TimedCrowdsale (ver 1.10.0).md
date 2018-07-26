@@ -4,7 +4,7 @@
 
 일정 기간내에 기부금을 받는 Crowdsale
 
-< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/validation/TimedCrowdsale.sol>
+< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/validation/TimedCrowdsale.sol >
 
 ````
 import "../../math/SafeMath.sol";

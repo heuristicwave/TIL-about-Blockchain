@@ -2,7 +2,7 @@
 
 자금 펀딩 목표가 있는 Crowdsale이다. 목표에 달성하지 못하면 환불 가능성이 있다.
 
-< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/distribution/RefundableCrowdsale.sol>
+< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/distribution/RefundableCrowdsale.sol >
 
 ````
 import "../../math/SafeMath.sol";

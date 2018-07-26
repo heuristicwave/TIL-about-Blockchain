@@ -2,7 +2,7 @@
 
 Crowdsale이 진행되는 동안 자금을 보관하는 데 사용한다. crowdsale가 실패하면 환불하고 crowdsale가 성공하면 송금한다. 
 
-< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/distribution/utils/RefundVault.sol>
+< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/distribution/utils/RefundVault.sol >
 
 ````
 import "../../../math/SafeMath.sol";

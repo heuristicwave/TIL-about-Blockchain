@@ -4,7 +4,7 @@
 
 총 기부금에 대한 제한이 있는 Crowdsale
 
-< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/validation/CappedCrowdsale.sol>
+< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/validation/CappedCrowdsale.sol >
 
 ````
 import "../../math/SafeMath.sol";

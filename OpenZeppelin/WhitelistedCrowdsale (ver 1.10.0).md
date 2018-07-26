@@ -4,7 +4,7 @@
 
 화이트리스트에 있는 사용자만 크라우드 세일에 참여할 수 있는 Crowdsale
 
-< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/validation/WhitelistedCrowdsale.sol>
+< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/validation/WhitelistedCrowdsale.sol >
 
 ````
 import "../Crowdsale.sol";

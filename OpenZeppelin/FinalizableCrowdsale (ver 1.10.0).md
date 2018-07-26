@@ -2,7 +2,7 @@
 
 마감후 오너가 extra work를 할 수 있는 Crowdsale
 
-< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/distribution/FinalizableCrowdsale.sol>
+< a href = https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.10.0/contracts/crowdsale/distribution/FinalizableCrowdsale.sol >
 
 ````
 import "../../math/SafeMath.sol";
