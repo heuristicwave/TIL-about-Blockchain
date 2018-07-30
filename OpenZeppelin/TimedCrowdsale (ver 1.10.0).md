@@ -81,3 +81,4 @@ function _preValidatePurchase(address _beneficiary, uint256 _weiAmount) internal
 (Extend parent behavior requiring to be within contributing period ) // 
 
 **Parameters** : 토큰으로 구입자, 기부할 `wei`의 양
+
