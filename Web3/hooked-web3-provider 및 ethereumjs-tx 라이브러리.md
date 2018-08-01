@@ -8,7 +8,9 @@
 
 `ethereumjs-tx`는 트랜잭션과 연관된 다양한 API를 제공하는 라이브러리 중 하나다. 원시 트랜잭션을 생성하고, 서명하고, 올바른 키로 서명됐는지 여부 등을 검사 할 수 있다.
 
-![](..\img\HookedWeb3Provider.png)
+<img src = "..\img\HookedWeb3Provider.png">
+
+![](D)
 
 1. 먼저 HookedWeb3Provider 인스턴스를 생성했다. (hooked-web3-provider 라이브러리에서 제공) **host** 는 노드의 HTTP URL이며 **transaction_signer **은 커스텀 공급자가 트랜잭션을 서명하기 위해 통신하는 객체다.
 2. transaction_signer 의 hasAddress는 트랜잭션이 서명될 수 있는지, 즉 트랜잭션 서명자가 from 주소 계좌의 개인 키를 가졌는지 검사하기 위해  호출된다. 이 메소드는 주소와 콜백을 받는다. 콜백은 첫 번째 인자를 오류 메시지로, 두번째 인자를 주소의 개인 키가 발견되지 않을 경우 false로 설정해 호출돼야 한다. 개인키가 발견되면 첫 번째 인자는 null이고 두번째 인자는 true여야 한다.
