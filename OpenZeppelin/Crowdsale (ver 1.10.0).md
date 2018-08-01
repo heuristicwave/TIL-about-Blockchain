@@ -27,7 +27,20 @@ weiRaised : Amount of wei raised
 
 
 
+<<<<<<< HEAD
 ```javascript
+=======
+#### Decimal Places: .0000000000000000001
+
+0 ~ 18 사이의 숫자 선택 가능
+
+- 0을 택하고 516개를 발행하면 총량은 516개
+- 10을 택하고 516개를 발행하면 516,0000000000 개가 총량이 된다.
+
+
+
+```event **TokenPurchase**(address purchaser, address beneficiary, uint256 value, uint256 amount) 
+>>>>>>> 71b63a3bd979b8d40147b9ea5d9cb7a823f50cd9
 event TokenPurchase(address purchaser, address beneficiary, uint256 value, uint256 amount)
 ```
 
