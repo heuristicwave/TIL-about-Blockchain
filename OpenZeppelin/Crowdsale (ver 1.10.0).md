@@ -27,7 +27,7 @@ weiRaised : Amount of wei raised
 
 
 
-```event **TokenPurchase**(address purchaser, address beneficiary, uint256 value, uint256 amount) 
+```javascript
 event TokenPurchase(address purchaser, address beneficiary, uint256 value, uint256 amount)
 ```
 
@@ -35,9 +35,11 @@ event TokenPurchase(address purchaser, address beneficiary, uint256 value, uint2
 
 
 
-```
+```javascript
 constructor(uint256 _rate, address _wallet, ERC20 _token) public
 ```
+
+실제 배포할때, 생성자에 적혀있는 매개변수에 맞추어 배포를한다. 비율과 함께 지갑의 주소와, 토큰발행 컨트랙트의 주소를 기입한다.
 
 **Parameters**: 토큰 단위당 wei로 환산, 수금된 자금이 모이는 지갑의 주소, 판매 중인 토큰의 주소
 
@@ -49,17 +51,17 @@ require : rate는 0보다 커야하고, 지갑과 토큰 주소는 0이면 안�
 
 @dev low level token purchase ***DO NOT OVERRIDE*** 
 
-````
+````javascript
 function () external payable { buyTokens(msg.sender); }
 ````
 
-````
+````javascript
 function buyTokens(address _beneficiary) public payable
 ````
 
 **Parameters** : 토큰 구입을 수행하는 주소
 
-````
+````javascript
 uint256 weiAmount = msg.value;
     _preValidatePurchase(_beneficiary, weiAmount);	// Condition
 
@@ -89,7 +91,7 @@ uint256 weiAmount = msg.value;
 
 ##### _preValidatePurchase
 
-````
+````javascript
 function _preValidatePurchase( address _beneficiary, uint256 _weiAmount ) internal
 ````
 
@@ -99,7 +101,7 @@ function _preValidatePurchase( address _beneficiary, uint256 _weiAmount ) intern
 
 ##### _postValidatePurchase
 
-````
+````javascript
 function _postValidatePurchase( address _beneficiary, uint256 _weiAmount ) internal
 ````
 
@@ -119,7 +121,7 @@ function _postValidatePurchase( address _beneficiary, uint256 _weiAmount ) inter
 
 ##### _deliverTokens
 
-````
+````javascript
 function _deliverTokens( address _beneficiary, uint256 _tokenAmount ) internal {
 	token.transfer(_beneficiary, _tokenAmount); 
   }
@@ -133,7 +135,7 @@ function _deliverTokens( address _beneficiary, uint256 _tokenAmount ) internal {
 
 ##### _processPurchase 
 
-````
+````javascript
 function _processPurchase( address _beneficiary, uint256 _tokenAmount ) internal {
     _deliverTokens(_beneficiary, _tokenAmount);
   }
@@ -145,7 +147,7 @@ function _processPurchase( address _beneficiary, uint256 _tokenAmount ) internal
 
 ##### _updatePurchasingState
 
-````
+````javascript
  function _updatePurchasingState( address _beneficiary, uint256 _weiAmount ) internal {
     // optional override
   }
@@ -157,11 +159,13 @@ function _processPurchase( address _beneficiary, uint256 _tokenAmount ) internal
 
 ##### _getTokenAmount 
 
-````
+````javascript
 function _getTokenAmount(uint256 _weiAmount) internal view returns (uint256) {
     return _weiAmount.mul(rate);
   }
 ````
+
+weiAmount를 rate에 비례하여 지급될 토큰의 수
 
 이더가 토큰으로 전환되는 방법을 확장하려면 오버라이드하세요.
 
@@ -173,8 +177,9 @@ function _getTokenAmount(uint256 _weiAmount) internal view returns (uint256) {
 
 ##### _forwardFunds 
 
-````
+````javascript
 function _forwardFunds() internal { wallet.transfer(msg.value); }
 ````
 
 구입 시, ETH가 저장되거나 forward될 방법를 결정한다. (지갑으로 전송)
+
