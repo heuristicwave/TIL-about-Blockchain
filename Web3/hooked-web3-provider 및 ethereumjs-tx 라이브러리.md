@@ -4,7 +4,7 @@
 
 `web3.eth.sendRawTransaction()`은 윈시 트랜잭션을 브로드캐스트하는 데 사용된다. 즉, 원시 트랜잭션을 생성하고 서명하기 위한 코드를 작성해야 한다. 이더리움 노드는 트랜잭션에 아무것도 수행하지 않고 직접 브로드캐스팅한다. 하지만 `web3.eth.sendRawTransaction()`을 사용해 트랜잭션을 브로드캐스팅 하는 것은 데이터 부분 생성, 원시 트랜잭션 생성, 트랜잭션 서명이 필요하므로 어렵다.
 
-[^Raw Transaction]: 원시 트랜잭션
+[^1]: Raw Transaction 원시 트랜잭션
 
 `hooked-web3-provider`라이브러리는 HTTP를 사용해 geth와 통신하는 커스텀 공급자를 제공한다. 그리고 이 공급자는 우리의 키를 사용해 컨트랙트 인스턴스의 `sendTransaction` 호출을 서명할 수 있게 해준다. 따라서 더 이상 트랜잭션의 데이터 부분을 만들 필요가 없다. 커스텀 공급자는 실제로 `web3.eth.sendRawTransaction()` 메소드 구현 부분을 override한다. 따라서 컨트랙트 인스턴스의 **sendTransaction() **호출과**web3.eth.sendRawTransaction()** 호출을 모두 서명할 수 있다. 컨트랙트 인스턴스의  **sendTransaction() ** 메소드는 내부적으로 트랜잭션의 데이터를 생성하고 트랜잭션을 브로드캐스트 하기 위해 **web3.eth.sendRawTransaction()** 를 호출한다.
 
