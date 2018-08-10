@@ -41,7 +41,7 @@ numbers.push(10);
 numbers.push(15);
 // numbers 배열은 [5, 10, 15]과 같다.
 ~~~
-    
+
 Zombie(_name, _dna, 1, uint32(now + cooldownTime), 0, 0)
 ~~~
 struct Zombie {
@@ -149,7 +149,7 @@ function sayHiToVitalik(string _name) public returns (string) {
 ~~~
 
 ### Storage vs Memory
-Storage는 블록체인 상에 영구적으로 저장되는 변수를 의미. Memory는 임시적으로 저장되는 변수로, 컨트랙트 함수에 대한 외부 호출들이 일어나는 사이에 지워짐. 상태 변수(함수 외부에 선언된 변수)는 초기 설정상 storage로 선언되어 블록체인에 영구적으로 저장되는 반면, 함수 내에 선언된 변수는 memory로 자동 선언되어서 함수 호출이 종료되면 사라짐.
+Storage는 블록체인 상에 영구적으로 저장되는 변수를 의미. Memory는 임시적으로 저장되는 변수로, 컨트랙트 함수에 대한 외부 호출들이 일어나는 사이에 지워짐. 상태 변수(함수 외부에 선언된 변수)는 **초기 설정상 storage로 선언되어 블록체인에 영구적으로 저장**되는 반면, 함수 내에 선언된 변수는 memory로 자동 선언되어서 함수 호출이 종료되면 사라짐.
 ~~~
 contract SandwichFactory {
   struct Sandwich {
@@ -178,6 +178,8 @@ contract SandwichFactory {
   }
 }
 ~~~
+값 타입은 (int, uint, bool)로컬 변수로 쓰일 때 memory, 배열은 로컬 변수로 쓰일 때 stroage에 저장 된다.
+
 Quiz. feedAndMultiply라는 함수를 생성한다. 이 함수는 uint형인 _zombieId 및 _targetDna을 전달받는다. 이 함수는 public으로 선언되어야 한다.
 
 주인만이 좀비에게 먹이를 줄 수 있도록 한다. require 구문을 추가하여 msg.sender가 좀비 주인과 동일하도록 한다. 
