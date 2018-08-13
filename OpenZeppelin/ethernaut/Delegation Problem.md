@@ -62,13 +62,12 @@ contract Delegation {
 
 이 후, 리믹스의 Compile 탭에서 Details 버튼을 눌러 아래와 같은 화면을 찾으면 pwn()함수의 FunctionHashes를 찾을 수 있다. 우리는 `dd365b8b`를 메타마스크 전송 시에 사용할 것이니 기억해 두자. 
 
-![](C:\Users\Admin\Documents\GitHub\TIL-about-Blockchain\img\delegate01.png)
+<img src = https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/delegate01.png?raw=true >
 
 fallback 함수를 실행하기 위해서 **Get new instance**를 누른 후 지급되는 instance 주소를 리믹스에서 불러와 Delegation컨트랙트를 컴파일 하기 전에 타겟이 될 delegate컨트랙트의 주소를 넣어서 배포한다.
 
+<img src = https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/delegate02.png?raw=true >
 
-
-![](C:\Users\Admin\Documents\GitHub\TIL-about-Blockchain\img\delegate02.png)
 
 대상에는 fallback 함수를 호출할 delegation컨트랙트의 CA주소가 들어가고 아까 알아둔 pwn()의functionhashes를 메타마스크의 `Hex Data`부분에 0x를 붙여서 충분한 가스 수수료를 주고 배포한다.
 
