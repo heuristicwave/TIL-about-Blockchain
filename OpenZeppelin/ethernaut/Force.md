@@ -32,7 +32,7 @@ contract Force {/*
 
 그냥 단순히 메타마스크에서 주어진 CA주소에 송금을 하면 어떻게 될까?
 
-![](C:\Users\Admin\Documents\GitHub\TIL-about-Blockchain\img\force01.png)
+![](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/force01.png?raw=true)
 
 
 
