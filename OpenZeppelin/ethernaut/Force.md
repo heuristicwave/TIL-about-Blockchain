@@ -40,7 +40,7 @@ contract Force {/*
 
 솔리디티 도큐먼트에서는 아래와 같은 `selfdestruct`에 대한 설명이 있다.
 
-[^]: A contract without a payable fallback function can receive Ether as a recipient of a coinbase transaction (aka miner block reward) or as a destination of a `selfdestruct`.
+> A contract without a payable fallback function can receive Ether as a recipient of a coinbase transaction (aka miner block reward) or as a destination of a `selfdestruct`.
 
 payable 함수가 없는 컨트랙트가 이더를 받으려면, selfdestruct의 목적지가 되어야 한다고 한다. 여기서 힌트를 얻어 바로 컨트랙트를 작성해보자!
 
@@ -56,11 +56,11 @@ contract ForceHack {
 
 **ForceHack** 컨트랙트는 이더를 받을 수 있도록 payable 함수와 이더를 옮길 수 있게 selfdestruct를 구현해야 한다.
 
-![](C:\Users\Admin\Documents\GitHub\TIL-about-Blockchain\img\force02.png)
+![](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/force02.png?raw=true)
 
 위 소스코드를 담은 ForceHack을 배포한 이후에, 리믹스 왼쪽 상단 value에 0.1이더를 적고 (fallback)을 실행시킨다.
 
-![](C:\Users\Admin\Documents\GitHub\TIL-about-Blockchain\img\force03.png)
+![](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/force03.png?raw=true)
 
 이더스캔에서 확인해보면 나의 EOA주소에서 배포한 CA주소로 0.1이더가 잘 들어 간것을 확인 할 수 있다.
 
@@ -76,7 +76,7 @@ await getBalance("Instance address")
 
 이어서 결과물을 제출하면 성공!!
 
-![](C:\Users\Admin\Documents\GitHub\TIL-about-Blockchain\img\force04.png)
+![](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/force04.png?raw=true)
 
 Force 문제를 통해서 selfdestruct의 기능과 payable 함수 유무에 따른 이더전송 가능유뮤를 알 수 있었다. https://medium.com/loom-network/how-to-secure-your-smart-contracts-6-solidity-vulnerabilities-and-how-to-avoid-them-part-2-730db0aa4834 이 글을 읽어보고 언제 selfdestruct를 사용해야하는지 고민해보고 여러분의 컨트랙트에 적용해보자.
 
