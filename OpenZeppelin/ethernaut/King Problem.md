@@ -14,7 +14,7 @@
 
 왕위를 탈취하고 영원한 왕좌를 차지하기 위해 컨트랙트 이름을 정복자라고 지었다. 정복자 컨트랙트를 나의 계정으로 배포하자.
 
-![](C:\Users\hwave\Documents\GitHub\TIL-about-Blockchain\img\King01.png)
+![](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/King01.png?raw=true)
 
 현재 owner와 king은 위에 명시된 주소이고, prize는 1ETH 이다. 즉, 1이더 이상을 King의 CA에 전송하면 왕이 될 수 있다.
 
@@ -62,11 +62,11 @@ contract Conqueror {
 
 리믹스에서 배포한 Conqueror 컨트랙트를 활용하여 target이 될 King의 주소를 넣고, Value 값에 1이더 이상의 금액을 넣고 트랜잭션을 발생시킨다.
 
-![](C:\Users\hwave\Documents\GitHub\TIL-about-Blockchain\img\King02.png)
+![](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/King02.png?raw=true)
 
 그러나 가스리밋과 수수료를 넉넉하게 지정해 주었음에도 불구하고, Out of gas 문제가 발생한다.
 
-![](C:\Users\hwave\Documents\GitHub\TIL-about-Blockchain\img\King03.png)
+![](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/King03.png?raw=true)
 
 롭슨 네트워크 상의 문제로 인식하고 그냥 King 컨트랙트에 1이더 이상의 금액을 넣어서 다음단계로 넘어가자.
 
@@ -76,7 +76,7 @@ contract Conqueror {
 
 나의 풀이법이 맞는지 점검해 보기위해서 환경만 바꿔 테스트를 진행했다.
 
-![](C:\Users\hwave\Documents\GitHub\TIL-about-Blockchain\img\King04.png)
+![](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/King04.png?raw=true)
 
 위와 같이 Conqueror 컨트랙트를 활용하여2이더를 전송하여 King(위 사진을 보면 킹과 오너가 다르다)이 되고 다른 주소(0x4b0....)로 King컨트랙트에 3이더 이상의 트랜잭션 발생시키면 revert처리가 된 것을 콘솔창에서 확인 할 수 있다.
 
