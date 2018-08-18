@@ -4,7 +4,7 @@
 
 ## King Problem
 
-이번 문제의 목표는 King이 되는 것이다. 사실 코드만 보면 prize보다 큰 금액만 걸면 왕위에 오를 수 있기 때문에 무척이나 간단한 문제처럼 보인다. 실제로 단 한번의 sendTransaction을 통하여 이번 단계를 해결 할 수 있다. 그러나, Ethernaut이 말하고 싶은 문제는, **Your goal is to break it. **즉, 영원한 왕위에 오를 수 있는 방법을 구하라고 하는 것이다. 자! 이제 왕좌를 차지하러 코드속으로 들어가 보자!
+이번 문제의 목표는 King이 되는 것이다. 사실 코드만 보면 prize보다 큰 금액만 걸면 왕위에 오를 수 있기 때문에 무척이나 간단한 문제처럼 보인다. 실제로 단 한번의 sendTransaction을 통하여 이번 단계를 해결 할 수 있다. 그러나, Ethernaut이 말하고 싶은 문제는, **Your goal is to break it.**즉, 영원한 왕위에 오를 수 있는 방법을 구하라고 하는 것이다. 자! 이제 왕좌를 차지하러 코드속으로 들어가 보자!
 
 
 
@@ -14,9 +14,27 @@
 
 왕위를 탈취하고 영원한 왕좌를 차지하기 위해 컨트랙트 이름을 정복자라고 지었다. 정복자 컨트랙트를 나의 계정으로 배포하자.
 
-![](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/King01.png?raw=true)
+---
+## King.sol 코드 리뷰
 
-현재 owner와 king은 위에 명시된 주소이고, prize는 1ETH 이다. 즉, 1이더 이상을 King의 CA에 전송하면 왕이 될 수 있다.
+```
+//생성자
+function King() public payable { 
+    king = msg.sender; // King 컨트랙트를 배포 하는 계정이 king이 된다.
+    prize = msg.value; // 컨트랙트를 배포할 때, 기입한 값이 prize가 된다.
+  }
+
+  function() external payable {
+    require(msg.value >= prize || msg.sender == owner);
+    king.transfer(msg.value);
+    king = msg.sender;
+    prize = msg.value;
+  }
+```
+
+외부에서 바로 King생성자(function)을 호출하여 이번 문제를 해결 할 수 있지만, constructor가 생긴 지금의 상황을 고려하면 제대로 된 풀이 법이 아니다.
+
+익명함수를 주목해보자! 유효성을 검사하는 require문에서 prize보다 왕위에 오를 계정의 value가 커야하고, sender와 owner가 같아야 한다. 이더넛으로 부터 문제가 배포되었을때는 sender와 owner가 같지만 우리가 다른 컨트랙트를 통해 sender와 owner를 다르게 만들면 영원한 왕위에 오를 수 있다!
 
 ### Conqueror.sol
 
@@ -56,7 +74,11 @@ contract Conqueror {
 
 
 
-**Fallback** 함수는 다른 누군가가 왕위를 탈취하려 할 때,  revert시켜서 그 누구도 왕좌에 오르지 못하게 한다.
+**Fallback** 함수는 다른 누군가로부터 Conqueror 컨트랙트를 보호하기 위해서 넣어놓은 함수 이다. Conqueror 컨트랙트에 트랜잭션을 발생시켜도 바로  revert시켜서 컨트랙트를 보호한다. 사실 이문제를 풀을 때는 꼭 작성하지 않아도 된다.
+
+![](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/King01.png?raw=true)
+
+현재 owner와 king은 위에 명시된 주소이고, prize는 1ETH 이다. 즉, 1이더 이상을 King의 CA에 전송하면 왕이 될 수 있다.
 
 ---
 
@@ -68,10 +90,26 @@ contract Conqueror {
 
 ![](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/King03.png?raw=true)
 
-롭슨 네트워크 상의 문제로 인식하고 그냥 King 컨트랙트에 1이더 이상의 금액을 넣어서 다음단계로 넘어가자.
+~~롭슨 네트워크 상의 문제로 인식하고 그냥 King 컨트랙트에 1이더 이상의 금액을 넣어서 다음단계로 넘어가자.~~
 
 ---
+## 수정 (gas Limit & gas Price 이해하기)
 
+필자가 out of gas문제를 고민하다가 가스리밋과 가스가격의 정의를 잘 못 이해하고 있다는 것을 깨달았다. 메타마스크에서 **가스 수수료**를 누르면 **가스 가격**과 **가스 리밋**이 나온다.
+- 가스 가격 : 이더리움 네트워크내에서 내가 발생시킨 트랜잭션을 우선적으로 처리하기 위해 내가 지불하는 가스 가격이다.
+- 가스 리밋 : 해당 트랜잭션을 전송하는데 최대로 허락 할 마지노선을 뜻한다. 참고로 디폴트 가스 리밋은 21000이다.
+
+이더 스캔에서 트랜잭션 영수증을 확인해 보면,   **Actual Tx Cost/Fee**항목이 보인다. 이것이 내가 지정한 가스 가격에 실제 사용한 가스양(**Gas Used By Txn**)을 곱하여 계산된 결과가 나온다. 아래 필자의 이더스캔내역을 확인하면서 가스에 대한 이해도를 높이자!
+
+ 다시 롭슨 테스트넷에서 진행한 결과 문제 없이 잘 실행된다.
+
+[필자의 King Problem 성공 Receipt](https://ropsten.etherscan.io/tx/0x1d69a5babf21eb6abd8ba51f006328fafc9d42f9312ee2b70bf93524ed2933aa)
+
+참고로, 위 이더스캔에서 보여지는 To를 들여다보면 이더가 2차례에 걸쳐서 보내졌는데 King컨트랙트 내부에 작성된 아래와 같은 코드때문에 발생한 것이다. 
+```
+king.transfer(msg.value);
+```
+---
 ### JavaScript VM에서 실행하기
 
 나의 풀이법이 맞는지 점검해 보기위해서 환경만 바꿔 테스트를 진행했다.
@@ -82,24 +120,7 @@ contract Conqueror {
 
 
 
-이번 문제를 통하여 악의적인 의도를 가진 컨트랙트에 의해서 내가 배포한 코드가 공격을 받을 수 있다는 것을 체험했다. 또한, Fallback함수와 revert() 함수로 예외를 발생시켜 영원한 왕좌에 오르게 되면서 다른 사람들이 게임에 참여할 수 없도록 만들었다. 이것은 실제 스마트 컨트랙트로 경매에 관련된 서비스를 제공할때 위와 같은 공격에 대한 대비책이 없다면, 아무도 입찰 할 수 없는 문제를 발생시킨다. 때문에 우리는 `Condition - Effects - Interation` 패턴을 지닌 `pull형 payable`을 사용해야한다. 
-
-
-
-### Condition - Effects - Interation
-
-> - Condition
->
->   함수를 실행하는 조건을 확인하고 조건이 유효하지 않을 때는 처리를 중단
->
-> - Effects
->
->   상태를 업데이트 (ex : 경매일 경우, 반환 금액)
->
-> - Interaction
->
->   다른 컨트랙트에 메시지를 보낸다 (ex : 입찰금)
-
+이번 문제를 통하여 악의적인 의도를 가진 컨트랙트에 의해서 내가 배포한 코드가 본래의 의도와는 다르게 작용할 수 있다는 것을 체험했다. 이것은 실제 스마트 컨트랙트로 경매에 관련된 서비스를 제공할때 위와 같은 공격에 대한 대비책이 없다면, 악의적인 공격자에 의한 공격을 받으면 아무도 입찰 할 수 없는 문제를 발생시킨다. 때문에 우리는 조건문을 작성할 때에도 신중하게 코드를 짜야한다.
 
 
 다음번에는 10단계 Re-entrancy에서 만나요!
