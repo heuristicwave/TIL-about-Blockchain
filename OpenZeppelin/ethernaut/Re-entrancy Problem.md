@@ -101,11 +101,11 @@ contract Hack {
 
 
 
-![](C:\Users\hwave\Documents\GitHub\TIL-about-Blockchain\img\reentrance01.png)
+https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/reentrance01.png?raw=true
 
 Hack 컨트랙트에서, InstanceAddress의 ethBalance를 체크해보면 기본적으로 1이더가 들어있는 것을 확인할 수 있다. 이후, 리믹스 상단 Value에 0.1이더를 기입하고 attack을 하면 0.1이더를 기부하고 이어서 기부금을 다시 인출하는데 그때 Hack에 있는 폴백함수를 실행시켜서 지속적으로 0.1이더씩 인출하게 된다. Hack의 CA에 제대로 ETH가 들어와 있는지 확인해 보려면 ethBalance에 Hack의 주소를 넣고 호출하면, 아래와 같이 이더 금액이 표시된다.
 
-![](C:\Users\hwave\Documents\GitHub\TIL-about-Blockchain\img\reentrance02.png)
+https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/reentrance02.png?raw=true
 
 >필자의 경우, 1.1이더가 아니라 1.3이더가 있는 이유는 2번의 outofgas문제로 탈취하지 못한채 InstanceAddress에 2번 기부를 하였고 3번째 시도에 제대로 된 가스 계산을 통해서 전액을 탈취하는데 성공했다. 그러므로, attck 함수를 호출하는 경우 가스비를 잘 계산하여 함수를 호출하자!!
 
@@ -115,7 +115,7 @@ Hack 컨트랙트에서, InstanceAddress의 ethBalance를 체크해보면 기본
 
  [1.3이더 가져오기](https://ropsten.etherscan.io/tx/0x3a335a244b29a19612f6302ce9d5b22e6f4a217352e41cf79ed7e6e7766cb348) 
 
-![](C:\Users\hwave\Documents\GitHub\TIL-about-Blockchain\img\reentrance03.png)
+https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/reentrance03.png?raw=true
 
 
 
