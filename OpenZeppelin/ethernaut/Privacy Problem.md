@@ -52,7 +52,7 @@ web3.eth.getStorageAt('Paste your CA Address', 0, (err, res) => console.log(res)
 
 슬롯넘버에 아무것도 저장되어(0x00~)있지 않을 값을 찾을때(4까지~~)까지 indexNumber를 올려 찍어보자. 
 
-![](C:\Users\hwave\Documents\GitHub\TIL-about-Blockchain\img\privacy01.png)
+https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/privacy01.png?raw=true
 
 **slot을 분석할 때, 문제에서 처음 말한 인자값 파싱이 어떻게 일어날지 생각해보자** 
 
