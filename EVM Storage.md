@@ -30,7 +30,7 @@ StorageTest라는 컨트랙트 안에 크기가  서로 다른 변수, 배열, �
 
 첫번째 사진의 선언한 항목들에 각각 해당되는 슬롯을 주석으로 명시해 두었다.
 
-![](C:\Users\hwave\Documents\GitHub\TIL-about-Blockchain\img\storage1.png)
+https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/storage1.png?raw=true
 
 배포된 StorageTest의 CA주소를 복사하여 `getStorageAt` 함수를 이용하여 데이터를 조회했다.
 
@@ -39,8 +39,7 @@ web3.eth.getStorageAt('Paste your CA Address', 0, (err, res) => console.log(res)
 ```
 
 위 명령어에서 0은 슬롯의 index Number을 뜻한다. 
-
-![](C:\Users\hwave\Documents\GitHub\TIL-about-Blockchain\img\storage2.png)
+https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/storage2.png?raw=true
 
 #### slot 0
 
