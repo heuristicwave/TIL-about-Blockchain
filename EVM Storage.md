@@ -76,3 +76,9 @@ web3.eth.getStorageAt('Paste your CA Address', 0, (err, res) => console.log(res)
 
 이렇게 솔리디티에서 데이터가 어떻게 저장되는지 저수준의 방법으로 알아보았다. 상태 변수가 어떻게 저장되는지 공부함으로써 솔리디티 개발자가 지향해야 할 자세와 가스비를 절약할 수 있는 방법을 알 수 있었다.
 
+
+
+#### 참고
+
+https://programtheblockchain.com/posts/2018/03/09/understanding-ethereum-smart-contract-storage/
+
