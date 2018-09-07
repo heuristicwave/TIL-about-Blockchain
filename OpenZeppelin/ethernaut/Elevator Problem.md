@@ -13,7 +13,7 @@
 
 나는 이 elevator 문제를 한참동안 들여다 봐도 무엇이 잘못 되었는지, 찾지 못햇다. 우선 문제 주소를 remix에 넣고 컨트랙트 주소를 불러오자! 이때, 인터페이스는 배포가 불가능하니 꼭 **셀렉트를 Elevator**로 바꾸고 At Address를 진행하자. 처음에 문제로 출제된 Elevator 주소를 불러와 top함수를 호출하면 불값이 false로 되어 있다. 
 
-![](C:\Users\hwave\Documents\GitHub\TIL-about-Blockchain\img\elevator01.png)
+https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/elevator01.png?raw=true
 
 문제에서, 이 엘리베이터는 *"너의 빌딩에 꼭대기에 도달할수 없는게 맞지?"* 라고 하는 것을 보아 top을 true 값으로 바꾸면 문제를 통과 할 수 있다.
 
