@@ -42,12 +42,12 @@ if(msg.sender != owner) { revert(); }</br>
 assert(msg.sender == owner);</br>
 require(msg.sender == owner);</br>
 
-## Withdraw 패턴
+## 리믹스 디버거
 
-http://solidity.readthedocs.io/en/v0.4.24/common-patterns.html
-송금을 받는 주체가 계약인 경우에는 fallback 함수가 호출되는데, 이 fallback 함수에 악의적인 처리가 포함되면 부정인출이 일어 날 수 있다.
-이전 CA의 처리를 실패하게 만들어서 본래의 기능을 못하게 함.
-
-그러나 전용 함수를 사용하여 사용자가 직접 인출해가게 하면
-솔리디티 예시에서는
-bid와 입찰금 반환처리 부분이 분리되었기 때문에 withdraw가 실패해도 이후의 bid처리에 영향을 미치지 않는다.
+- Instructions : 함수 실행을 위한 바이트 코드를 보여줌
+- Solidity Locals : 현재 컨텍스트와 관련된 지역 변수의 값과 자료형을 보여준다.
+- Solidity State : 상태 변수의 값과 자료형을 보여준다.
+- Step detail : 가스 사용량, 남은 가스를 디버그 하는데 필요
+- Call Stack : 함수 코드에 필요한 임시 변수를 보여준다.
+- Memory : 함수 내에서 사용되는 지역 변수를 보여줌
+- Call Data : 클라이언트가 계약에 보내는 실제 데이터를 보여준다. 첫 4바이트는 함수 식별자를 가리키며, 나머지 32바이트는 들어오는 파라미터를 포함한다.
