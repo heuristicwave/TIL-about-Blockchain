@@ -89,102 +89,123 @@ modifier notFinalized() {
 
 ````javascript
 function vote(bool agree) public checkTime {
-    require(votesByAddress[msg.sender].time == 0);
+    require(votesByAddress[msg.sender].time == 0);	// ?
 
-    uint256 voiceWeight = token.balanceOf(msg.sender);
+    uint256 voiceWeight = token.balanceOf(msg.sender);	// sender의 토큰양이 voiceWeight
     uint256 maxVoiceWeight = safeDiv(token.totalSupply(), MAX_TOKENS_WEIGHT_DENOM);
+    // 토큰을 1000개 이상 가지고 있어도 영향력은 max 1000
     voiceWeight =  voiceWeight <= maxVoiceWeight ? voiceWeight : maxVoiceWeight;
-
+	// user가 행사한 의견만큼 카운트가 증감됨
     if(agree) {
         yesCounter = safeAdd(yesCounter, voiceWeight);
     } else {
         noCounter = safeAdd(noCounter, voiceWeight);
     }
-
+	// 투자의 투표시간과 투표량 동의 여부가 기록됨
     votesByAddress[msg.sender].time = now;
     votesByAddress[msg.sender].weight = voiceWeight;
     votesByAddress[msg.sender].agree = agree;
-
+	// 총 투표자수 1씩 더함
     totalVoted = safeAdd(totalVoted, 1);
 }
 ````
 
-특정 유저의 최대 기부금을 설정하는 함수
+>Ternary Operator
+>
+>`<conditional> ? <if-true> : <if-false>
 
-**Parameters** : 최대금액을 설정할 주소, 개인 기부금의 최대 제한 `wei`
 
 
+##### revokeVote
 
-##### setGroupCap
+사용자  투표 철회
 
-````
-function setGroupCap(address[] _beneficiaries, uint256 _cap) external onlyOwner {
-    for (uint256 i = 0; i < _beneficiaries.length; i++) {
-      caps[_beneficiaries[i]] = _cap;
+````javascript
+function revokeVote() public checkTime {
+    require(votesByAddress[msg.sender].time > 0);
+
+    uint256 voiceWeight = votesByAddress[msg.sender].weight;	// weight가 voiceWeight
+    bool agree = votesByAddress[msg.sender].agree;
+	// 투표를 철회하기 위한 변수 변경
+    votesByAddress[msg.sender].time = 0;
+    votesByAddress[msg.sender].weight = 0;
+    votesByAddress[msg.sender].agree = false;
+	// 총 투표자 수에서도 빠지고 의사권을 행사한것도 빠짐
+    totalVoted = safeSub(totalVoted, 1);
+    if(agree) {
+        yesCounter = safeSub(yesCounter, voiceWeight);
+    } else {
+        noCounter = safeSub(noCounter, voiceWeight);
     }
-  }
+}
 ````
 
-그룹 유저의 최대 기부금을 설정하는 함수
-
-그룹내 주소 각각의 cap들의 총합
-
-**Parameters** : 최대금액이 설정된 주소들, 개인 기부금의 최대 제한 `wei`
 
 
+##### onTokenTransfer (모르겠다)
 
-##### getUserCap
+사용자의 투표 내용을 확인하고 수정할 수 있도록 사용자의 지갑에서 토큰을 전송한 후 함수 호출
+
+```javascript
+function onTokenTransfer(address tokenHolder, uint256 amount) public {
+        require(msg.sender == fundAddress);
+        if(votesByAddress[tokenHolder].time == 0) {
+            return;
+        }
+        if(!checkTransfersAfterEnd) {
+             if(finalized || (now < startTime || now > endTime)) {
+                 return;
+             }
+        }
+
+        if(token.balanceOf(tokenHolder) >= votesByAddress[tokenHolder].weight) {
+            return;
+        }
+        uint256 voiceWeight = amount;
+        if(amount > votesByAddress[tokenHolder].weight) {
+            voiceWeight = votesByAddress[tokenHolder].weight;
+        }
+
+        if(votesByAddress[tokenHolder].agree) {
+            yesCounter = safeSub(yesCounter, voiceWeight);
+        } else {
+            noCounter = safeSub(noCounter, voiceWeight);
+        }
+        votesByAddress[tokenHolder].weight = safeSub(votesByAddress[tokenHolder].weight, voiceWeight);
+    }
 
 ```
-function getUserCap(address _beneficiary) public view returns (uint256) {
-    return caps[_beneficiary];
-  }
+
+
+
+##### tryToFinalize
+
+poll을 마무리짓고  결과와 함꼐 onPollFinish를 콜백
+
+```javascript
+function tryToFinalize() public notFinalized returns(bool) {
+    if(now < endTime) {	// endTime이 되기 전까지는 끝낼 수 없음
+        return false;
+    }
+    finalized = true;	// endTime을 넘으면 종려시키고
+    onPollFinish(isSubjectApproved());	// 이부분 중에서 > 뭘까?
+    return true;
+}
 ```
 
-그룹 유저의 cap를 반환하는 함수
-
-**Parameters** : 확인할 cap의 주소
-
-**Returns** : 사용자의 현재 cap를 반환한다.
 
 
+#### 기타 함수
 
-##### getUserContribution
+```javascript
+function isNowApproved() public view returns(bool) {	// 여기서는 사용 안함
+    return isSubjectApproved();
+}
 
+function isSubjectApproved() internal view returns(bool) {
+    return yesCounter > noCounter;
+}
+
+function onPollFinish(bool agree) internal;
 ```
-function getUserContribution(address _beneficiary) public view returns (uint256) {
-    return contributions[_beneficiary];
-  }
-```
 
-지금까지의 특정 유저가 기부한 금액을 반환하는 함수
-
-**Parameters** : 기부자의 주소
-
-**Returns** : 유저가 지금까지 기부한 금액
-
-
-
-##### _preValidatePurchase 
-
-````
-function _preValidatePurchase(address _beneficiary, uint256 _weiAmount) internal {
-    super._preValidatePurchase(_beneficiary, _weiAmount);
-    require(contributions[_beneficiary].add(_weiAmount) <= caps[_beneficiary]);
-  }
-````
-
-기부하려는 금액이 유저의 cap보다 크면 안됨
-
-
-
-##### _updatePurchasingState 
-
-````
- function _updatePurchasingState(address _beneficiary, uint256 _weiAmount) internal {
-    super._updatePurchasingState(_beneficiary, _weiAmount);
-    contributions[_beneficiary] = contributions[_beneficiary].add(_weiAmount);
-  }
-````
-
-유저가 기부한 금액을 update한다
