@@ -1,4 +1,4 @@
-문제 해설에 들어가기 전,  이번 포스팅은 이더넛 내에서 콘솔창과 상호작용을 할 줄 알고 기본적인 리믹스 및 메타마스크 사용법이 숙지되어 있다는 가정 하에 해설을 진행합니다.
+문제 해설에 들어가기 전, 이번 포스팅은 이더넛 내에서 콘솔창과 상호작용을 할 줄 알고 기본적인 리믹스 및 메타마스크 사용법이 숙지되어 있다는 가정 하에 해설을 진행합니다.
 
 
 
@@ -6,10 +6,8 @@
 
 이번 문제는 문지기를 통과하는 문제이다. 우선 힌트를 살펴보자!
 
- - Telephone 문제와 Token 문제를 잘 떠올려 보자.
- - `msg.gas`와 `gasleft()`에 대해서 공부하자.
-
-
+- Telephone 문제와 Token 문제를 잘 떠올려 보자.
+- `msg.gas`와 `gasleft()`에 대해서 공부하자.
 
 사실 이번 문제는 아직 부족한 나에게는 그동안 풀어왔던 문제들보다 훨씬 어려웠다. Privacy 문제도 어려웠다고 하지만, 이번문제는 풀다가 질려서 2주 이상 이더넛 문제풀이를 손 놓고 있었다. 구글링끝에 도움을 받은 블로그의 글들을 아래 링크로 남겨두었는데, 처음봐서는 쉽게 이해가 되지 않을 수도 있다는 나와같은 사람들이 있을 것 같아서 이번 포스팅에 더 공을 들여야 겠다.
 
@@ -17,7 +15,7 @@
 
 ### 코드 분석
 
-```javascript
+```
 pragma solidity ^0.4.18;
 
 contract GatekeeperOne {
@@ -48,27 +46,21 @@ contract GatekeeperOne {
 }
 ```
 
-enter라는 함수가 gate1, 2, 3을 상속받고 있다. 때문에 우리는 차례로 문지기를 통과 하여야 한다. 
+enter라는 함수가 gate1, 2, 3을 상속받고 있다. 때문에 우리는 차례로 문지기를 통과 하여야 한다.
 
 그러므로 우리는 각 modifier 함수에 대한 require문을 통과할 방법을 강구하면 해결된다.
 
-
-
 첫 번째, gate는 Telephone문제에서 만난 것처럼 다른 컨트랙트를 만들어서 sender와 origin을 다르게 만들면 통과할 수 있다. (Telephone 풀이와 같기 때문에 여기서는 통과하겠다.)
 
-​두 번째는 가스비가 얼마나 소모되는지 정확하게 알고 있어야한다. msg.gas가 8191의 배수여야만 관문을 통과할 수 있기 때문에, 리믹스 디버거의 사용법을 잘 활용할 수 있다면 통과할 수 있다.
+두 번째는 가스비가 얼마나 소모되는지 정확하게 알고 있어야한다. msg.gas가 8191의 배수여야만 관문을 통과할 수 있기 때문에, 리믹스 디버거의 사용법을 잘 활용할 수 있다면 통과할 수 있다.
 
 세 번째 관문은, 데이터 타입의 형변환에 대한 개념과 flag & mask에 대한 이해가 있어야 3개의 작은문(require 문)을 빠져나갈 수 있다.
 
+*이번 단계에서는 문제의 특성상 미리 답을 알려주고, 2번째와 3번째문을 통과하는 것을 설명하면서 동시에 솔루션 코드에 대한 해설을 진행하겠다.*
 
+먼저 아래의 솔루션 코드인 `Pass`컨트랙트의 _target에 문제의 CA주소를 넣고 배포한다.
 
-_이번 단계에서는 문제의 특성상 미리 답을 알려주고, 2번째와 3번째문을 통과하는 것을 설명하면서 동시에 솔루션 코드에 대한 해설을 진행하겠다._
-
-
-
-먼저 아래의 솔루션 코드인 `Pass`컨트랙트의 _target에 문제의 CA주소를 넣고 배포한다. 
-
-```javascript
+```
 contract Pass {
   GatekeeperOne gk;
   bytes8 key = bytes8(tx.origin) & 0xFFFFFFFF0000FFFF;
@@ -97,13 +89,13 @@ contract Pass {
 
 먼저 앞서 배포한 Pass컨트랙트의 **enter**함수에 매개변수로 가스를 넉넉하게 500000을 넣어주고 호출해보자. **이때!! 아래 사진과 같이 msg.gas가 있는 13번째 라인을 더블클릭하여 중단점을 만들자!!** 분명 2번째 modifier를 통과하는 가스가 오십만이 아니기 때문에 revert에러가 발생할 것이다.
 
-![msg.gas에서 breakpoint](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/gateOne01.png?raw=true)
+[![msg.gas에서 breakpoint](https://github.com/heuristicwave/TIL-about-Blockchain/raw/master/img/gateOne01.png?raw=true)](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/gateOne01.png?raw=true)
 
-이후 우리는 남은 가스값을 확인하기위해서 디버거탭으로 이동하여 위 사진에서 노란색으로 활성화된 버튼 밑에있는  `Jump to the next breakpoint` 버튼을 눌러서 마지막 부분즈음에 위치하는 13라인으로 이동한다음 사진에서 노란색으로 활성화된 `Step over forward`을 클릭하여 opcode가 위 빨간 박스처럼 GAS라고 써있는 곳을 찾으면 % 연산이 일어나기 직전의 남은 가스량을 알 수 있다.
+이후 우리는 남은 가스값을 확인하기위해서 디버거탭으로 이동하여 위 사진에서 노란색으로 활성화된 버튼 밑에있는 `Jump to the next breakpoint` 버튼을 눌러서 마지막 부분즈음에 위치하는 13라인으로 이동한다음 사진에서 노란색으로 활성화된 `Step over forward`을 클릭하여 opcode가 위 빨간 박스처럼 GAS라고 써있는 곳을 찾으면 % 연산이 일어나기 직전의 남은 가스량을 알 수 있다.
 
 500000(초기 가스값) - 499787(남은 가스량) + 2 (msg.gas에 해당하는 옵코드 가스 소모량) = 215
 
-![gateOne02.png](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/gateOne02.png?raw=true)
+[![gateOne02.png](https://github.com/heuristicwave/TIL-about-Blockchain/raw/master/img/gateOne02.png?raw=true)](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/gateOne02.png?raw=true)
 
 첫번째 사진에서 한번더 Step over을 하면 위 사진과 같이 연산에 해당하는 부분이 활성화되는데
 
@@ -134,8 +126,6 @@ contract Pass {
 
 따라서 solution에서 위와 같은 코드를 통하여 3번째 문을 통과하는 key를 만들 수 있다.
 
-
-
 > 16진수 마스킹이 잘 이해가 되지 않을 수도 있기 때문에 짧은 16진수로 예시를 들어 보자면
 >
 > 0xA는 바이너리는 1010이고 0xF는 1111이다. 0xA & 0xF를 하면 결과값이 1010이나오고 이것은 0xA 본래의 모습과 같다.
@@ -144,24 +134,22 @@ contract Pass {
 >
 > 조건을 bytes로 바꾸어 체크해보면, 아래와 같다.
 >
-> ```java
+> ```
 > require(bytes4(_gateKey) == bytes2(_gateKey)); // 1번조건
 > require(bytes4(_gateKey) != bytes8(_gateKey)); // 2번조건
 > ```
 >
-> 그렇다면, 8바이트의 16진수를 다음과 같이 (A - 0000 | B -  0000 | C -  0000 | D -  0000) 4개씩 끊어 차례로 A, B, C, D라고 하자. bytes2로 주소를 변환하면 D만이 보존되고 나머지는 손실된다.
+> 그렇다면, 8바이트의 16진수를 다음과 같이 (A - 0000 | B - 0000 | C - 0000 | D - 0000) 4개씩 끊어 차례로 A, B, C, D라고 하자. bytes2로 주소를 변환하면 D만이 보존되고 나머지는 손실된다.
 >
 > 1번과 2번조건을 만족시키려면 C만을 손실시키면 됨으로 bytes8의 마스크는 0xFFFFFFFF0000FFFF가 되는 것이다.
 >
-> 이것을 통하여 3개의 require문을 통과할 수 있는 tx.orgin으로부터 만든 key를 얻을 수 있다. 
-
-
+> 이것을 통하여 3개의 require문을 통과할 수 있는 tx.orgin으로부터 만든 key를 얻을 수 있다.
 
 여기까지 솔루션인 Pass 컨트랙트에 대한 설명이 끝낫다.
 
 이제, 롭슨 환경에서 Pass 컨트랙트에 Instance Address를 넣어 배포하고 enter 함수의 매개변수에 문제 2에서 구한 가스값을 넣고 호출하면 문제가 해결된다!!!
 
-![가스값 819315를 매개변수로 주고 확인된 트랜잭션 결과물](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/gateOne03.png?raw=true)
+[![가스값 819315를 매개변수로 주고 확인된 트랜잭션 결과물](https://github.com/heuristicwave/TIL-about-Blockchain/raw/master/img/gateOne03.png?raw=true)](https://github.com/heuristicwave/TIL-about-Blockchain/blob/master/img/gateOne03.png?raw=true)
 
 위 사진을 보면 주어진 문제의 주소가 나의 주소(from) 과 같아 진 것을 알 수 있다.
 
@@ -175,20 +163,16 @@ contract Pass {
 
 도움이 될만한 자료들
 
->[비트 연산자로 플래그 처리하기](https://dojang.io/mod/page/view.php?id=184) 
+> [비트 연산자로 플래그 처리하기](https://dojang.io/mod/page/view.php?id=184)
 >
->[16진수 비트 시프트와 마스킹 과정을 공부 할 수 있는 자료](https://paul-samuels.com/blog/2014/03/27/bit-manipulation-by-example/) 
+> [16진수 비트 시프트와 마스킹 과정을 공부 할 수 있는 자료](https://paul-samuels.com/blog/2014/03/27/bit-manipulation-by-example/)
 >
->[16진수 변환기](https://www.scadacore.com/tools/programming-calculators/online-hex-converter/)
-
-
+> [16진수 변환기](https://www.scadacore.com/tools/programming-calculators/online-hex-converter/)
 
 필자가 도움을 받은 블로그
 
-> https://medium.com/coinmonks/blockchain-ctf-write-up-ethernaut-gatekeeperone-level-49f8d0a0528b
+> <https://medium.com/coinmonks/blockchain-ctf-write-up-ethernaut-gatekeeperone-level-49f8d0a0528b>
 >
-> https://medium.com/coinmonks/ethernaut-lvl-13-gatekeeper-1-walkthrough-how-to-calculate-smart-contract-gas-consumption-and-eb4b042d3009
-
-
+> <https://medium.com/coinmonks/ethernaut-lvl-13-gatekeeper-1-walkthrough-how-to-calculate-smart-contract-gas-consumption-and-eb4b042d3009>
 
 그럼, 다음번에는 14단계 Gatekeeper Two에서 만나요!
