@@ -1,7 +1,6 @@
 # TIL-about-Blockchain
 
-https://medium.com/@heuristicwave/iot-smartcontract-in-solidity-51d7b5f83428 미디엄 IoT and SmartContract</br>
-https://medium.com/@heuristicwave/iot-smartcontract-in-solidity-2-%EC%9E%91%EC%84%B1%EC%A4%91-c3f2aa04fb8e 2편
+[내 블로그1](https://medium.com/@heuristicwave/iot-smartcontract-in-solidity-51d7b5f83428 미디엄 IoT and SmartContract)
 
 ## 상태변경성
 
@@ -25,8 +24,10 @@ if (!owner.send(address(this).balance)) {
 ~~~
 ~~~
 owner.transfer(address(this).balance);
-~~~ 
+~~~
 위 2개는 동일한 기능을 한다.
+
+
 
 ## 트랜잭션과 오류 처리
 
@@ -41,6 +42,8 @@ currently behaves exactly the same as all of the following:</br>
 if(msg.sender != owner) { revert(); }</br>
 assert(msg.sender == owner);</br>
 require(msg.sender == owner);</br>
+
+
 
 ## 리믹스 디버거
 
