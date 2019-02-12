@@ -12,6 +12,21 @@ POC토큰의 경우, 1개의 tx당 38058 ~ 38122 (통상적인 ERC20 transfer �
 
 
 
+**ETHMULTIPLE**
+
+https://etherscan.io/tx/0xcbb37650b91906ffd518b9297671bf9bfa917b4302adfefc7175150eaa858e77
+
+```
+function multiSendEth(address[] addresses) public payable {
+   for(uint i = 0; i < addresses.length; i++) {
+     addresses[i].transfer(msg.value / addresses.length);
+   }
+   msg.sender.transfer(this.balance);
+}
+```
+
+
+
 ### When do we use multiple transactions?
 
 => AirDrop
@@ -52,3 +67,6 @@ emit Transfer(address(0), _participant, _amount);
 >
 > by [Rob Hitchens B9lab](https://ethereum.stackexchange.com/users/5549/rob-hitchens-b9lab)
 
+
+
+[multipleEthTransfer](https://fling.openrelay.xyz/)
